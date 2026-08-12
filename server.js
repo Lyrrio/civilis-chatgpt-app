@@ -171,15 +171,15 @@ function renderMap(){
 function render(){
   const f=country("250");
   if(!state || !f) return;
-  document.querySelector("#title").textContent=\`France — \${state.year} 🇫🇷\`;
-  document.querySelector("#turn").textContent=\`Tour \${state.turn}\`;
+  document.querySelector("#title").textContent="France — "+state.year+" 🇫🇷";
+  document.querySelector("#turn").textContent="Tour "+state.turn;
   for(const k of ["economy","army","science","stability"]) document.querySelector("#"+k).textContent=f[k];
 
   const s=country(state.selectedCountryId)||f;
-  document.querySelector("#selected").textContent=\`\${s.name} \${s.emoji||""}\`;
+  document.querySelector("#selected").textContent=s.name+" "+(s.emoji||"");
   const rel=s.id==="250"?"Vous":s.relation==="ally"?"Allié":s.relation==="friendly"?"Amical":s.relation==="hostile"?"Hostile":"Neutre";
   document.querySelector("#relation").textContent=rel;
-  document.querySelector("#mapHint").textContent=s.id==="250"?"Votre territoire.":\`\${s.name} sélectionné.\`;
+  document.querySelector("#mapHint").textContent=s.id==="250"?"Votre territoire.":s.name+" sélectionné.";
 
   const log=document.querySelector("#log");
   log.innerHTML="";
@@ -188,7 +188,7 @@ function render(){
   }
   renderMap();
   window.openai?.setWidgetState?.({
-    modelContent:\`Civilis: tour \${state.turn}, année \${state.year}, pays sélectionné \${s.name}.\`,
+    modelContent:"Civilis: tour "+state.turn+", année "+state.year+", pays sélectionné "+s.name+".",
     privateContent:{selectedCountryId:state.selectedCountryId}
   });
 }
